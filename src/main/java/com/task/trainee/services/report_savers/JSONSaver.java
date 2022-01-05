@@ -1,6 +1,7 @@
 package com.task.trainee.services.report_savers;
 
 import com.task.trainee.constants.JSONOutputFields;
+import com.task.trainee.exceptions.SaveException;
 import com.task.trainee.models.Report;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,16 @@ public class JSONSaver extends Saver {
     }
 
     @Override
-    public void save(Report report) {
-        File filePath = new File("Save");
+    public void save(Report report) throws SaveException {
+        File filePath = new File(REPORTS_FOLDER_PATH);
         if (filePath.exists() || filePath.mkdir()) {
             try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(REPORTS_FOLDER_PATH, generateFilename()))) {
                 writer.write(generateJSON(report).toJSONString());
             } catch (IOException e) {
-                throw new RuntimeException();
+                throw new SaveException(e.getMessage());
             }
         } else {
-            throw new RuntimeException();
+            throw new SaveException(String.format("Impossible to work with directory %s", REPORTS_FOLDER_PATH));
         }
     }
 

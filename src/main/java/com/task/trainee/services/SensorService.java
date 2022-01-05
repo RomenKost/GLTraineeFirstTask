@@ -1,6 +1,7 @@
 package com.task.trainee.services;
 
 import com.task.trainee.constants.JSONInputFields;
+import com.task.trainee.exceptions.SaveException;
 import com.task.trainee.models.Report;
 import com.task.trainee.models.Sensor;
 import com.task.trainee.repositories.SensorsRepository;
@@ -39,7 +40,6 @@ public class SensorService {
     public JSONArray getSensors(List<Predicate<Sensor>> filters) {
         JSONArray response = new JSONArray();
         repository.stream()
-                .filter(Objects::nonNull)
                 .filter(sensor -> filters.stream().allMatch(filter -> filter.test(sensor)))
                 .map(sensor -> {
                     JSONObject jsonObject = new JSONObject();
@@ -66,7 +66,7 @@ public class SensorService {
         return response;
     }
 
-    public void generateReport() {
+    public void generateReport() throws SaveException {
         saver.save(
                 Report.builder()
                         .numberOfSensors((int) (repository.stream().count() + repository.getCountBrokenSensors()))
