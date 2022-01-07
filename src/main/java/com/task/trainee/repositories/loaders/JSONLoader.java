@@ -69,7 +69,7 @@ public class JSONLoader extends Loader {
                     .creator(json.getString(jsonFields.JSON_CREATED_BY))
 
                     .build();
-        } catch (IOException | SensorJSONException e) {
+        } catch (IOException | SensorJSONException | JSONException e) {
             return null;
         }
     }

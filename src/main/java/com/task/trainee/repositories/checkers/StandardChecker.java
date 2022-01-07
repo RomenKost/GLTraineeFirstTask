@@ -14,10 +14,12 @@ public class StandardChecker extends Checker {
     private final Pattern statusPattern;
     private final Map<Pattern, Pattern> patternValueMap;
     private final Pattern emailPattern;
+    private final Pattern idPattern;
 
     public StandardChecker(@Value("${sensor.status.regexp}") String statusPattern,
                            @Value("#{${pattern.value}}") Map<String, String> patternValueMap,
-                           @Value("${pattern.email.regexp}") String emailPattern) {
+                           @Value("${pattern.email.regexp}") String emailPattern,
+                           @Value("${pattern.id.regexp}") String idPattern) {
         this.statusPattern = Pattern.compile(statusPattern);
         this.patternValueMap = patternValueMap.entrySet()
                 .stream()
@@ -26,14 +28,18 @@ public class StandardChecker extends Checker {
                         entry -> Pattern.compile(entry.getValue())
                 ));
         this.emailPattern = Pattern.compile(emailPattern);
+        this.idPattern = Pattern.compile(idPattern);
     }
 
     @Override
     public void checkValues(Sensor sensor) throws SensorException {
         checkBatteryPercentage(sensor.getBatteryPercentage());
         checkTime(sensor.getCreatedTime(), sensor.getModifiedTime());
-        checkStatus(sensor.getSensorStatus());
         checkValue(sensor.getType(), sensor.getSensorValue());
+
+        checkUsingPattern("status", sensor.getSensorStatus(), statusPattern);
+        checkUsingPattern("id", sensor.getId(), idPattern);
+
         checkEmail(sensor.getCreator(), "creator");
         checkEmail(sensor.getModifier(), "modifier");
     }
@@ -50,9 +56,9 @@ public class StandardChecker extends Checker {
         }
     }
 
-    private void checkStatus(String status) throws SensorException {
-        if (!statusPattern.asPredicate().test(status)) {
-            throw new SensorException("sensorStatus", String.valueOf(status));
+    private void checkUsingPattern(String key, String value, Pattern pattern) throws SensorException {
+        if (!pattern.asPredicate().test(value)) {
+            throw new SensorException(key, String.valueOf(value));
         }
     }
 
