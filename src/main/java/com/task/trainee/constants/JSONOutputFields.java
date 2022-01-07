@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:json_output.properties")
+@PropertySource("classpath:properties/json_output.properties")
 public class JSONOutputFields {
     public final String JSON_ALL_SENSORS;
     public final String JSON_BROKEN_SENSORS;

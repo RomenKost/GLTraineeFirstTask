@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.Date;
 
 @Component
-@PropertySource("classpath:sensors.properties")
+@PropertySource("classpath:properties/settings.properties")
 public class JSONSaver extends Saver {
     private final JSONOutputFields jsonFields;
     private final String REPORTS_FOLDER_PATH;

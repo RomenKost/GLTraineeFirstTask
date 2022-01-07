@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource("classpath:json_input.properties")
+@PropertySource("classpath:properties/json_input.properties")
 public class JSONInputFields {
     public final String JSON_ID;
     public final String JSON_NAME;

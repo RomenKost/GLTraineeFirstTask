@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 
 @Component
-@PropertySource("classpath:sensors.properties")
+@PropertySource("classpath:properties/settings.properties")
 public class JSONLoader extends Loader {
     private final String SENSORS_PATH;
     private final JSONInputFields jsonFields;

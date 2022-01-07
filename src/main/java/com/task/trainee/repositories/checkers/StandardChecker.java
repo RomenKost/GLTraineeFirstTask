@@ -3,6 +3,7 @@ package com.task.trainee.repositories.checkers;
 import com.task.trainee.exceptions.SensorException;
 import com.task.trainee.models.Sensor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
+@PropertySource("classpath:properties/regexes.properties")
 public class StandardChecker extends Checker {
     private final Pattern statusPattern;
     private final Map<Pattern, Pattern> patternValueMap;

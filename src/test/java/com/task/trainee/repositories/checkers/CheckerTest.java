@@ -1,6 +1,7 @@
 package com.task.trainee.repositories.checkers;
 
 
+import com.task.trainee.SensorFields;
 import com.task.trainee.exceptions.SensorException;
 import com.task.trainee.models.Sensor;
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +12,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
-@TestPropertySource("classpath:test.properties")
+@TestPropertySource("classpath:properties/test.properties")
 @Import({SensorFields.class})
 public class CheckerTest {
     @Autowired

@@ -1,7 +1,8 @@
-package com.task.trainee.repositories.checkers;
+package com.task.trainee;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestComponent;
+import org.springframework.test.context.TestPropertySource;
 
 @TestComponent
 public class SensorFields {
