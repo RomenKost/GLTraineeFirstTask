@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * @author Roman Kostenko (roman.kostenko@globallogic.com).
+ *
+ * This class loads and contains sensors and information about then.
+ */
 @Repository
 public class SensorsRepository {
     private final List<Sensor> sensors = new ArrayList<>();

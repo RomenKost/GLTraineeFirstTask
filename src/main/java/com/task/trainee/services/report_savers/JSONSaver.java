@@ -16,10 +16,20 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
 
+/**
+ * @author Roman Kostenko (roman.kostenko@globallogic.com).
+ * <p>
+ * This class saves {@link Report} in the JSON format.
+ */
 @Component
 @PropertySource("classpath:properties/settings.properties")
 public class JSONSaver extends Saver {
     private final JSONOutputFields jsonFields;
+
+    /**
+     * to change folder to save reports or filename pattern you should change properties in the file
+     * settings.properties.
+     */
     private final String REPORTS_FOLDER_PATH;
     private final String FILENAME_PATTERN;
 

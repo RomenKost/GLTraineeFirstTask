@@ -4,6 +4,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * @author Roman Kostenko (roman.kostenko@globallogic.com).
+ *
+ * This class is immutable model of sensor.
+ */
 @Builder
 @Getter(AccessLevel.PUBLIC)
 public class Sensor {

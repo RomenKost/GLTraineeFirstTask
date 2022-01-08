@@ -2,7 +2,6 @@ package com.task.trainee.repositories.loaders;
 
 
 import com.task.trainee.constants.JSONInputFields;
-import com.task.trainee.exceptions.SensorJSONException;
 import com.task.trainee.models.Sensor;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,10 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * @author Roman Kostenko (roman.kostenko@globallogic.com).
+ * <p>
+ * This class in implemetation of {@link Loader} that loads sensors from folder.
+ */
 @Component
 @PropertySource("classpath:properties/settings.properties")
 public class JSONLoader extends Loader {
+    /**
+     * To change folder path, you should change settings.properties.
+     */
     private final String SENSORS_PATH;
     private final JSONInputFields jsonFields;
 
@@ -47,10 +53,15 @@ public class JSONLoader extends Loader {
         return sensors;
     }
 
+    /**
+     * This method parses json from file.
+     *
+     * @param file - json file
+     * @return null if sensor is broken. In other case returns loaded {@link Sensor}.
+     */
     private Sensor processJSON(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             JSONObject json = new JSONObject(reader.lines().collect(Collectors.joining()));
-            check(json);
             JSONObject jsonStatus = json.getJSONObject(jsonFields.JSON_SENSOR_STATUS);
 
             return Sensor.builder()
@@ -69,31 +80,8 @@ public class JSONLoader extends Loader {
                     .creator(json.getString(jsonFields.JSON_CREATED_BY))
 
                     .build();
-        } catch (IOException | SensorJSONException | JSONException e) {
+        } catch (IOException | JSONException e) {
             return null;
-        }
-    }
-
-    public void check(JSONObject json) throws SensorJSONException {
-        for (String key : new String[]{
-                jsonFields.JSON_ID, jsonFields.JSON_NAME, jsonFields.JSON_DESCRIPTION, jsonFields.JSON_TYPE,
-                jsonFields.JSON_BATTERY, jsonFields.JSON_SENSOR_STATUS,
-                jsonFields.JSON_MODIFIED_BY, jsonFields.JSON_MODIFIED_TIME,
-                jsonFields.JSON_CREATED_BY, jsonFields.JSON_CREATED_TIME
-        }) {
-            if (!json.has(key)) {
-                throw new SensorJSONException(key);
-            }
-        }
-
-        String key = jsonFields.JSON_SENSOR_STATUS;
-        try {
-            JSONObject sensorStatus = json.getJSONObject(key);
-            if (!sensorStatus.has(key = jsonFields.JSON_STATUS) || !sensorStatus.has(key = jsonFields.JSON_VALUE)) {
-                throw new SensorJSONException(key);
-            }
-        } catch (JSONException e) {
-            throw new SensorJSONException(key);
         }
     }
 }

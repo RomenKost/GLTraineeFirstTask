@@ -10,6 +10,11 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * @author Roman Kostenko (roman.kostenko@globallogic.com).
+ *
+ * This class is standard implemetation of {@link Checker}.
+ */
 @Component
 @PropertySource("classpath:properties/regexes.properties")
 public class StandardChecker extends Checker {

@@ -4,6 +4,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Roman Kostenko (roman.kostenko@globallogic.com).
+ *
+ * This class contains constants, those are matched json-fields of input files. If you want to change format of input
+ * json file, you should change matched properties file.
+ */
 @Component
 @PropertySource("classpath:properties/json_input.properties")
 public class JSONInputFields {
